@@ -1,5 +1,3 @@
-
-
 class vanAubel_1(Scene): 
     def construct(self): 
         Line_BA = Line(start=[-4.5,-3,0], end=[0.5,3,0]) 
@@ -46,19 +44,40 @@ class vanAubel_1(Scene):
         
         Text_title = Text("Teorema Van Aubel \n pada segitiga:").to_edge(UP+LEFT).scale(0.75)
         Van_Aubel_text = r'{ {|MA|} \over{ {|MA_1|} } } = { {|AC_1|} \over{ {|BC_1|} } } + { {|AB_1|} \over{ {|CB_1|} } }'
-        Van_Aubel_form = MathTex(Van_Aubel_text).next_to(Text_title, DOWN).scale(0.75)
-        Van_Aubel_form_1 = Van_Aubel_form.copy()
-        Van_Aubel_form_1.substrings_to_isolate=["MA", "MA_1"]
-        Van_Aubel_form_1.set_color_by_tex("MA", BLUE_D)
-        Van_Aubel_form_1.set_color_by_tex("MA_1", BLUE_B)
-        Van_Aubel_form_2 = Van_Aubel_form_1.copy()
-        Van_Aubel_form_2.substrings_to_isolate = ["|AC_1|", "|BC_1|"]
-        Van_Aubel_form_2.set_color_by_tex("|AC_1|", RED_D)
-        Van_Aubel_form_2.set_color_by_tex("|BC_1|", RED_B)
+        Van_Aubel_form_1 = MathTex(r'{ {|MA|} \over{ {|MA_1|} } } =').move_to(Text_title.get_corner(DL)+[0.75,-0.75,0]).scale(0.75)
+        Van_Aubel_form_1.substrings_to_isolate=[r"MA", r"MA_1"]
+        Van_Aubel_form_1.set_color_by_tex(r"MA", BLUE_D)
+        Van_Aubel_form_1.set_color_by_tex(r"MA_1", BLUE_B)
+        Van_Aubel_form_2 = MathTex(r'{ {|AC_1|} \over{ {|BC_1|} } }').next_to(Van_Aubel_form_1, RIGHT, buff=0).scale(0.75)
+        Van_Aubel_form_2.substrings_to_isolate = [r"AC_1", r"BC_1"]
+        Van_Aubel_form_2.set_color_by_tex(r"AC_1", RED_D)
+        Van_Aubel_form_2.set_color_by_tex(r"BC_1", RED_B)
+        Van_Aubel_form_3 = MathTex(r'+ { {|AB_1|} \over{ {|CB_1|} } }').next_to(Van_Aubel_form_2, RIGHT, buff=0).scale(0.75)
+        Van_Aubel_form_3.substrings_to_isolate = [r"AB_1", r"CB_1"]
+        Van_Aubel_form_3.set_color_by_tex(r"AB_1", GOLD_D)
+        Van_Aubel_form_3.set_color_by_tex(r"CB_1", GOLD_B)
         
-        self.play(Create(Text_title), Create(Van_Aubel_form))
+        Line_MA = Line(start=Point_M, end=Line_BA.get_end(), color=BLUE_D) 
+        Line_MA1 = Line(start=Point_A1, end=Point_M, color=BLUE_B) 
+        Line_AC1 = Line(start=Line_BA.get_end(), end=Point_C1, color=RED_D) 
+        Line_BC1 = Line(start=Line_BA.get_start(), end=Point_C1, color=RED_B)
+        Line_AB1 = Line(start=Line_AC.get_start(), end=Point_B1, color=GOLD_D) 
+        Line_CB1 = Line(start=Line_AC.get_end(), end=Point_B1, color=GOLD_B)
+        
+        self.play(Create(Text_title))
         self.wait()
-        self.play(FadeTransform(Van_Aubel_form, Van_Aubel_form_1))
+        self.play(FadeIn(Van_Aubel_form_1))
         self.wait()
-        self.play(FadeTransform(Van_Aubel_form_1, Van_Aubel_form_2))
+        self.play(Create(Line_MA))
+        self.play(Create(Line_MA1))
+        self.wait()
+        self.play(FadeIn(Van_Aubel_form_2))
+        self.wait()
+        self.play(Create(Line_AC1))
+        self.play(Create(Line_BC1))
+        self.wait()
+        self.play(FadeIn(Van_Aubel_form_3))
+        self.wait()
+        self.play(Create(Line_AB1))
+        self.play(Create(Line_CB1))
         self.wait()
